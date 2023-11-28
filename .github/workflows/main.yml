@@ -1,0 +1,34 @@
+name: "Extract ARM template for ADF"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validate_template:
+    name: Extract template
+    runs-on: ubuntu-latest
+    env:
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+      ADF_ID: "/subscriptions/8c11bf93-bc1d-4db6-b668-158dd1e8072c/resourceGroups/rg-martin-tosney/providers/Microsoft.DataFactory/factories/df-martin-test"
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3
+      - name: "Log in with Azure"
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: "Validate ARM template"
+        uses: Azure/data-factory-validate-action@v1.1.5
+        with:
+          path: "."
+          id: ${{ env.ADF_ID }}
+      - name: "Export Data Factory ARM template"
+        uses: Azure/data-factory-export-action@v1.2.0
+        with:
+          path: "."
+          id: ${{ env.ADF_ID }}
+      - name: "Upload ARM template as an Artifact"
+        uses: actions/upload-artifact@v3
+        with:
+          name: "ARM-template.json"
+          path: "./armTemplate"
