@@ -22,12 +22,12 @@ jobs:
         uses: Azure/data-factory-validate-action@v1.1.5
         with:
           path: "."
-          id: ${{ env.ADF_ID }}
+          # id: ${{ env.ADF_ID }}
       - name: "Export Data Factory ARM template"
         uses: Azure/data-factory-export-action@v1.2.0
         with:
           path: "."
-          id: ${{ env.ADF_ID }}
+          # id: ${{ env.ADF_ID }}
       - name: "Upload ARM template as an Artifact"
         uses: actions/upload-artifact@v3
         with:
