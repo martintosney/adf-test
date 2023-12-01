@@ -8,7 +8,7 @@ jobs:
     name: Extract template
     runs-on: ubuntu-latest
     env:
-      ADF_ID: "/subscriptions/8c11bf93-bc1d-4db6-b668-158dd1e8072c/resourceGroups/rg-martin-tosney/providers/Microsoft.DataFactory/factories/df-martin-test"
+      ADF_ID: "/subscriptions/8c11bf93-bc1d-4db6-b668-158dd1e8072d/resourceGroups/rg-martin-tosney/providers/Microsoft.DataFactory/factories/df-martin-test-does-not-exist"
     steps:
       - name: "Checkout"
         uses: actions/checkout@v3
@@ -22,12 +22,12 @@ jobs:
         uses: Azure/data-factory-validate-action@v1.1.5
         with:
           path: "."
-          # id: ${{ env.ADF_ID }}
+          id: ${{ env.ADF_ID }}
       - name: "Export Data Factory ARM template"
         uses: Azure/data-factory-export-action@v1.2.0
         with:
           path: "."
-          # id: ${{ env.ADF_ID }}
+          id: ${{ env.ADF_ID }}
       - name: "Upload ARM template as an Artifact"
         uses: actions/upload-artifact@v3
         with:
